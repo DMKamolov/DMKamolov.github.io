@@ -1,30 +1,230 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Diyor Kamolov — Personal Site</title>
-  <meta name="description" content="Official personal website of Diyor Kamolov.">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Diyor Kamolov — Policy, Philosophy, Technology</title>
+  <meta name="description" content="Landing page for Diyor Kamolov — politics, philosophy, and computer science. Research, writing, and projects." />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='0.9em' font-size='90'%3ED%3C/text%3E%3C/svg%3E">
+
+  <!-- Open Graph / Twitter Card -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Diyor Kamolov — Policy, Philosophy, Technology">
+  <meta property="og:description" content="Research, analysis, and projects at the intersection of politics, philosophy, and computer science.">
+  <meta property="og:image" content="https://DMKamolov.github.io/og.png">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <!-- Tailwind CSS (CDN for simplicity) -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    // Tailwind config — system fonts, enable dark mode via class
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: [
+              'Inter var',
+              'ui-sans-serif','system-ui','-apple-system','Segoe UI','Roboto','Noto Sans','Ubuntu','Cantarell','Helvetica Neue','Arial','sans-serif'
+            ]
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    /* Smooth underline animation */
+    .link-underline { position: relative; }
+    .link-underline::after { content: ""; position: absolute; left: 0; bottom: -3px; height: 2px; width: 0; background: currentColor; transition: width .2s ease; }
+    .link-underline:hover::after { width: 100%; }
+  </style>
 </head>
-<body>
-  <header>
-    <h1>Diyor Kamolov</h1>
-    <p>Welcome to my personal website.</p>
+<body class="bg-white text-slate-900 antialiased dark:bg-slate-950 dark:text-slate-100">
+  <!-- === Header / Nav === -->
+  <header class="sticky top-0 z-40 backdrop-blur supports-[backdrop-filter]:bg-white/70 dark:supports-[backdrop-filter]:bg-slate-950/70">
+    <div class="mx-auto max-w-6xl px-4 sm:px-6">
+      <div class="flex h-16 items-center justify-between">
+        <a href="#home" class="font-semibold tracking-tight">DK</a>
+
+        <nav class="hidden items-center gap-8 md:flex" aria-label="Primary">
+          <a href="#work" class="text-sm link-underline">Work</a>
+          <a href="#research" class="text-sm link-underline">Research</a>
+          <a href="#about" class="text-sm link-underline">About</a>
+          <a href="#contact" class="text-sm link-underline">Contact</a>
+        </nav>
+
+        <div class="flex items-center gap-3">
+          <button id="themeToggle" class="rounded-xl border border-slate-300 px-3 py-1.5 text-xs dark:border-slate-700" aria-label="Toggle dark mode">Theme</button>
+          <button id="menuBtn" class="md:hidden rounded-xl border border-slate-300 px-3 py-1.5 text-xs dark:border-slate-700" aria-controls="mobileMenu" aria-expanded="false">Menu</button>
+        </div>
+      </div>
+    </div>
+    <!-- Mobile menu -->
+    <div id="mobileMenu" class="md:hidden hidden border-t border-slate-200 dark:border-slate-800">
+      <div class="mx-auto max-w-6xl px-4 sm:px-6 py-3 flex flex-col gap-2">
+        <a href="#work" class="text-sm">Work</a>
+        <a href="#research" class="text-sm">Research</a>
+        <a href="#about" class="text-sm">About</a>
+        <a href="#contact" class="text-sm">Contact</a>
+      </div>
+    </div>
   </header>
 
-  <main>
-    <section>
-      <p>This site is currently under development.</p>
-    </section>
-  </main>
+  <!-- === Hero === -->
+  <section id="home" class="relative overflow-hidden">
+    <div class="mx-auto max-w-6xl px-4 sm:px-6 py-20 sm:py-28">
+      <div class="grid items-center gap-12 md:grid-cols-2">
+        <div>
+          <h1 class="text-3xl font-bold tracking-tight sm:text-5xl">Diyor Kamolov</h1>
+          <p class="mt-4 text-slate-600 dark:text-slate-300 max-w-prose">
+            I study politics, philosophy, and computer science. Currently based in the UK and completing undergraduate studies while preparing for graduate work in law and security studies. This site is under active development.
+          </p>
+          <div class="mt-8 flex flex-wrap gap-3">
+            <a href="#work" class="inline-flex items-center justify-center rounded-xl bg-slate-900 px-4 py-2.5 text-sm font-medium text-white dark:bg-slate-100 dark:text-slate-900">View work</a>
+            <a href="#contact" class="inline-flex items-center justify-center rounded-xl border border-slate-300 px-4 py-2.5 text-sm font-medium dark:border-slate-700">Contact</a>
+          </div>
+          <div class="mt-6 flex items-center gap-4 text-sm text-slate-500 dark:text-slate-400">
+            <a href="https://github.com/DMKamolov" class="link-underline" aria-label="GitHub">GitHub</a>
+            <a href="mailto:diyor.kamolov@example.com" class="link-underline" aria-label="Email">Email</a>
+            <a href="#" class="link-underline" aria-label="LinkedIn">LinkedIn</a>
+          </div>
+        </div>
+        <div class="relative">
+          <div class="aspect-video w-full rounded-2xl border border-slate-200 p-6 shadow-sm dark:border-slate-800">
+            <div class="grid h-full place-items-center text-center">
+              <div>
+                <p class="text-sm uppercase tracking-widest text-slate-500 dark:text-slate-400">Currently</p>
+                <p class="mt-2 text-xl font-semibold">Researching nuclear politics & extended deterrence</p>
+                <p class="mt-2 text-sm text-slate-600 dark:text-slate-300">Notes, memos, and visualizations will appear here.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 
-  <footer>
-    <small>&copy; <span id="year"></span> Diyor Kamolov. All rights reserved.</small>
+  <!-- === Creds / Focus areas === -->
+  <section class="border-t border-slate-200 py-14 dark:border-slate-800">
+    <div class="mx-auto max-w-6xl px-4 sm:px-6">
+      <h2 class="text-xl font-semibold">Focus</h2>
+      <div class="mt-6 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        <article class="rounded-2xl border border-slate-200 p-6 dark:border-slate-800">
+          <h3 class="font-medium">International Security</h3>
+          <p class="mt-2 text-sm text-slate-600 dark:text-slate-300">Deterrence theory, limited war, and the politics of nuclear sharing.</p>
+        </article>
+        <article class="rounded-2xl border border-slate-200 p-6 dark:border-slate-800">
+          <h3 class="font-medium">Law & Institutions</h3>
+          <p class="mt-2 text-sm text-slate-600 dark:text-slate-300">Rule of law, democratic erosion, and the interface with technology.</p>
+        </article>
+        <article class="rounded-2xl border border-slate-200 p-6 dark:border-slate-800">
+          <h3 class="font-medium">Data & Methods</h3>
+          <p class="mt-2 text-sm text-slate-600 dark:text-slate-300">Python/R workflows, reproducible notebooks, and visual analytics.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- === Selected Work === -->
+  <section id="work" class="py-14">
+    <div class="mx-auto max-w-6xl px-4 sm:px-6">
+      <div class="flex items-end justify-between gap-4">
+        <h2 class="text-xl font-semibold">Selected Work</h2>
+        <a href="#" class="text-sm link-underline">See all</a>
+      </div>
+      <div class="mt-6 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        <!-- Card 1 -->
+        <article class="group rounded-2xl border border-slate-200 p-6 transition hover:shadow-md dark:border-slate-800">
+          <h3 class="font-medium">Policy memo: Limited war in the atomic age</h3>
+          <p class="mt-2 text-sm text-slate-600 dark:text-slate-300">A Clausewitzian lens on contemporary deterrence and flexible response.</p>
+          <a href="#" class="mt-3 inline-flex text-sm link-underline">Read</a>
+        </article>
+        <!-- Card 2 -->
+        <article class="group rounded-2xl border border-slate-200 p-6 transition hover:shadow-md dark:border-slate-800">
+          <h3 class="font-medium">Notebook: Youth protest dynamics (2009–2019)</h3>
+          <p class="mt-2 text-sm text-slate-600 dark:text-slate-300">Data exploration and visualizations; replication files included.</p>
+          <a href="#" class="mt-3 inline-flex text-sm link-underline">Open</a>
+        </article>
+        <!-- Card 3 -->
+        <article class="group rounded-2xl border border-slate-200 p-6 transition hover:shadow-md dark:border-slate-800">
+          <h3 class="font-medium">Web: Interactive portfolio</h3>
+          <p class="mt-2 text-sm text-slate-600 dark:text-slate-300">Static site on GitHub Pages with CI/CD and Lighthouse-optimized.</p>
+          <a href="#" class="mt-3 inline-flex text-sm link-underline">Visit</a>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- === Research === -->
+  <section id="research" class="border-y border-slate-200 py-14 dark:border-slate-800">
+    <div class="mx-auto max-w-6xl px-4 sm:px-6">
+      <h2 class="text-xl font-semibold">Research Interests</h2>
+      <ul class="mt-6 grid gap-3 sm:grid-cols-2">
+        <li class="rounded-xl border border-slate-200 p-4 text-sm dark:border-slate-800">Nuclear politics, extended deterrence, and alliance management</li>
+        <li class="rounded-xl border border-slate-200 p-4 text-sm dark:border-slate-800">Democratic backsliding and institutional resilience</li>
+        <li class="rounded-xl border border-slate-200 p-4 text-sm dark:border-slate-800">Computational social science and methodological pluralism</li>
+        <li class="rounded-xl border border-slate-200 p-4 text-sm dark:border-slate-800">Ethics of AI, bias, and governance</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- === About === -->
+  <section id="about" class="py-14">
+    <div class="mx-auto max-w-3xl px-4 sm:px-6">
+      <h2 class="text-xl font-semibold">About</h2>
+      <p class="mt-4 text-slate-600 dark:text-slate-300">
+        I study politics, philosophy, and computer science. I write concise, evidence-based analyses and build small tools that clarify complex issues.
+        This site aggregates public notes, essays, and projects.
+      </p>
+    </div>
+  </section>
+
+  <!-- === Contact CTA === -->
+  <section id="contact" class="py-16">
+    <div class="mx-auto max-w-4xl px-4 sm:px-6 text-center">
+      <h2 class="text-2xl font-semibold">Collaborate or get in touch</h2>
+      <p class="mt-3 text-slate-600 dark:text-slate-300">For research, policy projects, or speaking invites.</p>
+      <div class="mt-6 flex flex-wrap items-center justify-center gap-3">
+        <a href="mailto:diyor.kamolov@example.com" class="rounded-xl bg-slate-900 px-5 py-3 text-sm font-medium text-white dark:bg-slate-100 dark:text-slate-900">Email me</a>
+        <a href="https://github.com/DMKamolov" class="rounded-xl border border-slate-300 px-5 py-3 text-sm font-medium dark:border-slate-700">GitHub</a>
+        <a href="#" class="rounded-xl border border-slate-300 px-5 py-3 text-sm font-medium dark:border-slate-700">LinkedIn</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- === Footer === -->
+  <footer class="border-t border-slate-200 py-8 text-center text-sm text-slate-500 dark:border-slate-800 dark:text-slate-400">
+    <div class="mx-auto max-w-6xl px-4 sm:px-6">
+      <p>&copy; <span id="year"></span> Diyor Kamolov. All rights reserved.</p>
+      <p class="mt-1"><a class="link-underline" href="#home">Back to top</a></p>
+    </div>
   </footer>
 
   <script>
-    // Auto-update footer year
+    // Year stamp
     document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Mobile menu toggle
+    const btn = document.getElementById('menuBtn');
+    const menu = document.getElementById('mobileMenu');
+    btn?.addEventListener('click', () => {
+      const expanded = btn.getAttribute('aria-expanded') === 'true';
+      btn.setAttribute('aria-expanded', String(!expanded));
+      menu.classList.toggle('hidden');
+    });
+
+    // Theme toggle: persist choice
+    const themeBtn = document.getElementById('themeToggle');
+    const root = document.documentElement;
+    const stored = localStorage.getItem('theme');
+    if (stored === 'dark' || (!stored && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+      root.classList.add('dark');
+    }
+    themeBtn?.addEventListener('click', () => {
+      root.classList.toggle('dark');
+      localStorage.setItem('theme', root.classList.contains('dark') ? 'dark' : 'light');
+    });
   </script>
 </body>
 </html>
+
