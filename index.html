@@ -1,13 +1,30 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>DMKamolov</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Diyor Kamolov — Personal Site</title>
+  <meta name="description" content="Official personal website of Diyor Kamolov.">
 </head>
 <body>
+  <header>
+    <h1>Diyor Kamolov</h1>
+    <p>Welcome to my personal website.</p>
+  </header>
+
   <main>
-    <h1>Hello — this is a site run by Diyor Kamolov</h1>
+    <section>
+      <p>This site is currently under development.</p>
+    </section>
   </main>
+
+  <footer>
+    <small>&copy; <span id="year"></span> Diyor Kamolov. All rights reserved.</small>
+  </footer>
+
+  <script>
+    // Auto-update footer year
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
 </body>
 </html>
