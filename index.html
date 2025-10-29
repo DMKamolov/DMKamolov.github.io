@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Diyor Kamolov — Policy, Philosophy, Technology</title>
   <meta name="description" content="Landing page for Diyor Kamolov — politics, philosophy, and computer science. Research, writing, and projects." />
-  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='0.9em' font-size='90'%3ED%3C/text%3E%3C/svg%3E">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='0.9em' font-size='90'%3ED%3C/text%3E%3C/svg%3E'>
 
   <!-- Open Graph / Twitter Card -->
   <meta property="og:type" content="website">
@@ -17,7 +17,6 @@
   <!-- Tailwind CSS (CDN for simplicity) -->
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
-    // Tailwind config — system fonts, enable dark mode via class
     tailwind.config = {
       darkMode: 'class',
       theme: {
@@ -32,41 +31,50 @@
       }
     }
   </script>
-  <!-- === Header / Nav === -->
+  <style>
+    .link-underline { position: relative; }
+    .link-underline::after { content: ""; position: absolute; left: 0; bottom: -3px; height: 2px; width: 0; background: currentColor; transition: width .2s ease; }
+    .link-underline:hover::after { width: 100%; }
+
+    /* Bounce animation for banner */
+    .animate-bounce-marquee { animation: bounceMarquee 8s cubic-bezier(0.45,0.05,0.55,0.95) infinite alternate; display: inline-block; will-change: transform; }
+    @keyframes bounceMarquee { 0% { transform: translateX(var(--travel, 0px)); } 100% { transform: translateX(0); } }100% { transform: translateX(0); } } 100% { transform: translateX(calc(100vw - 100%)); } }
+  </style>
+</head>
+<body class="bg-white text-slate-900 antialiased dark:bg-slate-950 dark:text-slate-100 relative after:fixed after:inset-0 after:-z-10 after:opacity-25 dark:after:opacity-30 after:pointer-events-none after:bg-[url('https://www.svgrepo.com/show/494396/circuit-pattern.svg')] after:bg-center after:bg-cover after:bg-no-repeat">
   <header class="sticky top-0 z-40 backdrop-blur supports-[backdrop-filter]:bg-white/70 dark:supports-[backdrop-filter]:bg-slate-950/70">
     <div class="mx-auto max-w-6xl px-4 sm:px-6">
       <div class="flex h-16 items-center justify-between">
         <a href="#home" class="font-semibold tracking-tight">DK</a>
-
-        
-
         <div class="flex items-center gap-3">
           <button id="themeToggle" class="rounded-xl border border-slate-300 px-3 py-1.5 text-xs dark:border-slate-700" aria-label="Toggle dark mode">Theme</button>
-          <button id="menuBtn" class="md:hidden rounded-xl border border-slate-300 px-3 py-1.5 text-xs dark:border-slate-700" aria-controls="mobileMenu" aria-expanded="false">Menu</button>
         </div>
       </div>
     </div>
-    </header>
+  </header>
 
-  <!-- === Hero === -->
-  <div class="w-full bg-amber-100 dark:bg-amber-900 text-amber-900 dark:text-amber-100 text-center text-sm py-2">This site is under development</div>
-
-<section id="home" class="relative overflow-hidden">
-  <div class="mx-auto max-w-6xl px-4 sm:px-6 py-20 sm:py-28">
-    <div class="max-w-3xl">
-      <h1 class="text-4xl font-bold tracking-tight sm:text-6xl mb-4">Welcome — I’m Diyor Kamolov</h1>
-      <p class="mt-2 text-lg text-slate-700 dark:text-slate-300 max-w-prose">
-        Undergraduate in <strong>Politics, Philosophy, and Computer Science</strong> at <strong>Bates College</strong>; currently on academic year abroad at the <strong>London School of Economics and Political Science (LSE)</strong> in the United Kingdom. My work and ongoing research lie at the intersection of <strong>international security, law, and technology</strong>.
-      </p>
-      <div class="mt-8 flex flex-wrap gap-4 text-sm">
-        <a href="mailto:diyor.kamolov@example.com" class="rounded-xl bg-slate-900 px-5 py-3 font-medium text-white dark:bg-slate-100 dark:text-slate-900">Email</a>
-        <a href="https://www.linkedin.com/in/diyor-kamolov-1174b2277/" class="rounded-xl border border-slate-300 px-5 py-3 font-medium dark:border-slate-700">LinkedIn</a>
-      </div>
+  <!-- Development Banner -->
+  <div class="w-full bg-amber-100 dark:bg-amber-900 text-amber-900 dark:text-amber-100 text-center text-sm py-2">
+    <div id="devBanner" class="relative mx-auto max-w-6xl overflow-hidden">
+      <div id="devBannerText" class="animate-bounce-marquee hover:[animation-play-state:paused]">This site is under development</div>
     </div>
   </div>
-</section>
 
-  <!-- === Footer === -->
+  <section id="home" class="relative overflow-hidden">
+    <div class="mx-auto max-w-6xl px-4 sm:px-6 py-20 sm:py-28">
+      <div class="max-w-3xl">
+        <h1 class="text-4xl font-bold tracking-tight sm:text-6xl mb-4">Welcome — I’m Diyor Kamolov</h1>
+        <p class="mt-2 text-lg text-slate-700 dark:text-slate-300 max-w-prose">
+          Undergraduate in <strong>Politics, Philosophy, and Computer Science</strong> at <strong>Bates College</strong>; currently on academic year abroad at the <strong>London School of Economics and Political Science (LSE)</strong> in the United Kingdom. My work and ongoing research lie at the intersection of <strong>international security, law, and technology</strong>.
+        </p>
+        <div class="mt-8 flex flex-wrap gap-4 text-sm">
+          <a href="mailto:diyor.kamolov@example.com" class="rounded-xl bg-slate-900 px-5 py-3 font-medium text-white dark:bg-slate-100 dark:text-slate-900">Email</a>
+          <a href="https://www.linkedin.com/in/diyor-kamolov-1174b2277/" class="rounded-xl border border-slate-300 px-5 py-3 font-medium dark:border-slate-700">LinkedIn</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <footer class="border-t border-slate-200 py-8 text-center text-sm text-slate-500 dark:border-slate-800 dark:text-slate-400">
     <div class="mx-auto max-w-6xl px-4 sm:px-6">
       <p>&copy; <span id="year"></span> Diyor Kamolov. All rights reserved.</p>
@@ -75,19 +83,7 @@
   </footer>
 
   <script>
-    // Year stamp
     document.getElementById('year').textContent = new Date().getFullYear();
-
-    // Mobile menu toggle
-    const btn = document.getElementById('menuBtn');
-    const menu = document.getElementById('mobileMenu');
-    btn?.addEventListener('click', () => {
-      const expanded = btn.getAttribute('aria-expanded') === 'true';
-      btn.setAttribute('aria-expanded', String(!expanded));
-      menu.classList.toggle('hidden');
-    });
-
-    // Theme toggle: persist choice
     const themeBtn = document.getElementById('themeToggle');
     const root = document.documentElement;
     const stored = localStorage.getItem('theme');
@@ -98,6 +94,21 @@
       root.classList.toggle('dark');
       localStorage.setItem('theme', root.classList.contains('dark') ? 'dark' : 'light');
     });
+      // Compute banner travel so it bounces within the banner width only
+    function setBannerTravel(){
+      const box = document.getElementById('devBanner');
+      const txt = document.getElementById('devBannerText');
+      if(!box || !txt) return;
+      // reset transform to measure natural width
+      txt.style.transform = 'none';
+      const travel = Math.max(0, box.clientWidth - txt.clientWidth);
+      // Start from the right edge: positive travel to 0
+      txt.style.setProperty('--travel', travel + 'px');
+    }
+    const ro = new ResizeObserver(setBannerTravel);
+    ro.observe(document.getElementById('devBanner'));
+    window.addEventListener('load', setBannerTravel);
+    window.addEventListener('resize', setBannerTravel);
   </script>
 </body>
 </html>
