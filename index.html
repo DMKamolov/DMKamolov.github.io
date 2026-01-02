@@ -4,17 +4,20 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Diyor Kamolov</title>
-  <meta name="description" content="Landing page for Diyor Kamolov" />
+  <meta name="description" content="Diyor Kamolov — research, writing, and projects at the intersection of politics, philosophy, law, and technology." />
+  <meta name="theme-color" content="#0B1220" />
+
+  <!-- Open Graph / Twitter -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Diyor Kamolov" />
+  <meta property="og:description" content="Research, writing, and projects at the intersection of politics, philosophy, law, and technology." />
+  <!-- TODO: replace with a public URL (NOT a local file path) -->
+  <meta property="og:image" content="https://example.com/og-image.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='0.9em' font-size='90'%3ED%3C/text%3E%3C/svg%3E'>
 
-  <!-- Open Graph / Twitter Card -->
-  <meta property="og:type" content="website">
-  <meta property="og:title" content="Diyor Kamolov">
-  <meta property="og:description" content="Research, analysis, and projects at the intersection of politics, philosophy, and computer science.">
-  <meta property="og:image" content="/Users/diyorkamolov/Desktop/Website /DMKamolov.github.io/log.png">
-  <meta name="twitter:card" content="summary_large_image">
-
-  <!-- Tailwind CSS (CDN for simplicity) -->
+  <!-- Tailwind (CDN) -->
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
@@ -23,68 +26,575 @@
         extend: {
           fontFamily: {
             sans: [
-              'Inter var',
-              'ui-sans-serif','system-ui','-apple-system','Segoe UI','Roboto','Noto Sans','Ubuntu','Cantarell','Helvetica Neue','Arial','sans-serif'
+              'Inter var','ui-sans-serif','system-ui','-apple-system','Segoe UI','Roboto',
+              'Noto Sans','Ubuntu','Cantarell','Helvetica Neue','Arial','sans-serif'
+            ],
+            mono: [
+              'ui-monospace','SFMono-Regular','Menlo','Monaco','Consolas','Liberation Mono','Courier New','monospace'
             ]
+          },
+          boxShadow: {
+            soft: '0 10px 35px rgba(2,6,23,.08)',
+            glow: '0 0 0 1px rgba(148,163,184,.25), 0 10px 35px rgba(2,6,23,.18)'
           }
         }
       }
     }
   </script>
+
   <style>
+    /* Subtle “high-end” background (no heavy textures) */
+    .bg-grid {
+      background-image:
+        radial-gradient(circle at 20% 0%, rgba(56,189,248,.16), transparent 35%),
+        radial-gradient(circle at 80% 20%, rgba(168,85,247,.14), transparent 40%),
+        radial-gradient(circle at 40% 100%, rgba(34,197,94,.10), transparent 35%),
+        linear-gradient(to bottom, rgba(2,6,23,.04), transparent 35%);
+    }
+    .dark .bg-grid {
+      background-image:
+        radial-gradient(circle at 20% 0%, rgba(56,189,248,.14), transparent 35%),
+        radial-gradient(circle at 80% 20%, rgba(168,85,247,.12), transparent 40%),
+        radial-gradient(circle at 40% 100%, rgba(34,197,94,.08), transparent 35%),
+        linear-gradient(to bottom, rgba(255,255,255,.06), transparent 35%);
+    }
+
+    /* Accessible focus ring */
+    :focus-visible { outline: 3px solid rgba(56,189,248,.55); outline-offset: 3px; }
+
+    /* Underline hover for links */
     .link-underline { position: relative; }
-    .link-underline::after { content: ""; position: absolute; left: 0; bottom: -3px; height: 2px; width: 0; background: currentColor; transition: width .2s ease; }
+    .link-underline::after {
+      content: ""; position: absolute; left: 0; bottom: -3px; height: 2px; width: 0;
+      background: currentColor; transition: width .18s ease;
+    }
     .link-underline:hover::after { width: 100%; }
 
-    /* Bounce animation for banner */
-    .animate-marquee{animation:marquee 12s linear infinite;display:inline-block;white-space:nowrap;}@keyframes marquee{0%{transform:translateX(100%);}100%{transform:translateX(-100%);} }@keyframes bounceMarquee { 0% { transform: translateX(var(--travel, 0px)); } 100% { transform: translateX(0); } }100% { transform: translateX(0); } } 100% { transform: translateX(calc(100vw - 100%)); } }
+    /* “Glass” */
+    .glass {
+      background: rgba(255,255,255,.65);
+      border: 1px solid rgba(148,163,184,.25);
+      backdrop-filter: blur(10px);
+    }
+    .dark .glass {
+      background: rgba(2,6,23,.55);
+      border: 1px solid rgba(148,163,184,.18);
+    }
   </style>
 </head>
-<body class="bg-white text-slate-900 antialiased dark:bg-slate-950 dark:text-slate-100 relative after:fixed after:inset-0 after:-z-10 after:opacity-25 dark:after:opacity-30 after:pointer-events-none after:bg-[url('https://www.svgrepo.com/show/494396/circuit-pattern.svg')] after:bg-center after:bg-cover after:bg-no-repeat">
-  <header class="sticky top-0 z-40 backdrop-blur supports-[backdrop-filter]:bg-white/70 dark:supports-[backdrop-filter]:bg-slate-950/70">
-    <div class="mx-auto max-w-6xl px-4 sm:px-6">
-      <div class="flex h-16 items-center justify-between">
-        <a href="#home" class="font-semibold tracking-tight">DK</a>
-        <div class="flex items-center gap-3">
-          <button id="themeToggle" class="rounded-xl border border-slate-300 px-3 py-1.5 text-xs dark:border-slate-700" aria-label="Toggle dark mode">Theme</button>
-        </div>
+
+<body class="bg-white text-slate-900 antialiased dark:bg-slate-950 dark:text-slate-100">
+  <!-- Background wash -->
+  <div class="pointer-events-none fixed inset-0 -z-10 bg-grid"></div>
+
+  <!-- Top bar -->
+  <header class="sticky top-0 z-50 border-b border-slate-200/70 bg-white/70 backdrop-blur dark:border-slate-800/70 dark:bg-slate-950/55">
+    <div class="mx-auto flex max-w-6xl items-center justify-between px-4 sm:px-6 h-16">
+      <a href="#home" class="flex items-center gap-3 font-semibold tracking-tight">
+        <span class="inline-flex h-9 w-9 items-center justify-center rounded-xl border border-slate-200 bg-white shadow-sm dark:border-slate-800 dark:bg-slate-950">
+          DK
+        </span>
+        <span class="hidden sm:inline">Diyor Kamolov</span>
+      </a>
+
+      <nav class="hidden md:flex items-center gap-6 text-sm text-slate-600 dark:text-slate-300">
+        <a class="link-underline" href="#writing">Writing</a>
+        <a class="link-underline" href="#projects">Work</a>
+        <a class="link-underline" href="#interests">Interests</a>
+        <a class="link-underline" href="#photos">Photos</a>
+        <a class="link-underline" href="#contact">Contact</a>
+      </nav>
+
+      <div class="flex items-center gap-2">
+        <button id="cmdkBtn"
+          class="hidden sm:inline-flex items-center gap-2 rounded-xl border border-slate-200 bg-white px-3 py-2 text-xs text-slate-600 shadow-sm dark:border-slate-800 dark:bg-slate-950 dark:text-slate-300"
+          aria-label="Open quick menu"
+          type="button">
+          <span class="font-mono text-[11px]">⌘</span><span class="font-mono text-[11px]">K</span>
+          <span class="ml-1 hidden lg:inline text-slate-400 dark:text-slate-500">Menu</span>
+        </button>
+
+        <button id="themeToggle"
+          class="inline-flex items-center justify-center rounded-xl border border-slate-200 bg-white px-3 py-2 text-xs shadow-sm dark:border-slate-800 dark:bg-slate-950"
+          aria-label="Toggle dark mode"
+          type="button">
+          Theme
+        </button>
+
+        <button id="mobileMenuBtn"
+          class="md:hidden inline-flex items-center justify-center rounded-xl border border-slate-200 bg-white px-3 py-2 text-xs shadow-sm dark:border-slate-800 dark:bg-slate-950"
+          aria-label="Open mobile menu"
+          type="button">
+          Menu
+        </button>
+      </div>
+    </div>
+
+    <!-- Mobile menu -->
+    <div id="mobileMenu" class="md:hidden hidden border-t border-slate-200/70 dark:border-slate-800/70">
+      <div class="mx-auto max-w-6xl px-4 sm:px-6 py-3 text-sm text-slate-700 dark:text-slate-300 flex flex-col gap-2">
+        <a class="py-1" href="#writing">Writing</a>
+        <a class="py-1" href="#projects">Work</a>
+        <a class="py-1" href="#interests">Interests</a>
+        <a class="py-1" href="#photos">Photos</a>
+        <a class="py-1" href="#contact">Contact</a>
       </div>
     </div>
   </header>
 
-  <!-- Development Banner -->
-  <div class="w-full bg-amber-100 dark:bg-amber-900 text-amber-900 dark:text-amber-100 text-center text-sm py-2">
-    <div id="devBanner" class="relative mx-auto max-w-6xl overflow-hidden">
-      <div id="devBannerText" class="animate-marquee hover:[animation-play-state:paused]">This site is under development</div>
-    </div>
-  </div>
+  <!-- Hero -->
+  <section id="home" class="relative">
+    <div class="mx-auto max-w-6xl px-4 sm:px-6 py-16 sm:py-24">
+      <div class="grid gap-10 lg:grid-cols-12 lg:items-center">
+        <div class="lg:col-span-7">
+          <div class="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white/60 px-3 py-1 text-xs text-slate-600 shadow-sm dark:border-slate-800 dark:bg-slate-950/50 dark:text-slate-300">
+            <span class="inline-block h-2 w-2 rounded-full bg-emerald-500"></span>
+            Politics · Philosophy · Computer Science · Law · Security
+          </div>
 
-  <section id="home" class="relative overflow-hidden">
-    <div class="mx-auto max-w-6xl px-4 sm:px-6 py-20 sm:py-28">
-      <div class="max-w-3xl">
-        <h1 class="text-4xl font-bold tracking-tight sm:text-6xl mb-4">Welcome — I’m Diyor Kamolov</h1>
-        <p class="mt-2 text-lg text-slate-700 dark:text-slate-300 max-w-prose">
-          Undergraduate in <strong>Politics, Philosophy, and Computer Science</strong> at <strong>Bates College</strong>; currently on academic year abroad at the <strong>London School of Economics and Political Science (LSE)</strong> in the United Kingdom. My work and ongoing research lie at the intersection of <strong>international security, law, and technology</strong>.
-        </p>
-        <div class="mt-8 flex flex-wrap gap-4 text-sm">
-          <a href="mailto:diorkamol@icloud.com" class="rounded-xl bg-slate-900 px-5 py-3 font-medium text-white dark:bg-slate-100 dark:text-slate-900">Email</a>
-          <a href="https://www.linkedin.com/in/diyor-kamolov-1174b2277/" class="rounded-xl border border-slate-300 px-5 py-3 font-medium dark:border-slate-700">LinkedIn</a>
+          <h1 class="mt-5 text-4xl font-bold tracking-tight sm:text-6xl">
+            Research and writing on security, law, and technology.
+          </h1>
+
+          <p class="mt-5 max-w-prose text-base leading-relaxed text-slate-700 dark:text-slate-300">
+            I’m <strong>Diyor Kamolov</strong>, an undergraduate in <strong>Politics, Philosophy, and Computer Science</strong> at <strong>Bates College</strong>,
+            currently spending an academic year at the <strong>London School of Economics (LSE)</strong>. I write and build projects at the intersection of
+            <strong>international security</strong>, <strong>public law</strong>, and <strong>computational analysis</strong>.
+          </p>
+
+          <div class="mt-8 flex flex-wrap items-center gap-3">
+            <a href="#writing"
+               class="inline-flex items-center justify-center rounded-xl bg-slate-900 px-5 py-3 text-sm font-medium text-white shadow-soft hover:shadow-glow transition dark:bg-slate-100 dark:text-slate-900">
+              Explore writing
+            </a>
+            <a href="#projects"
+               class="inline-flex items-center justify-center rounded-xl border border-slate-200 bg-white px-5 py-3 text-sm font-medium text-slate-800 shadow-soft hover:shadow-glow transition dark:border-slate-800 dark:bg-slate-950 dark:text-slate-100">
+              View work
+            </a>
+
+            <div class="flex flex-wrap gap-3 text-sm text-slate-600 dark:text-slate-300">
+              <a class="link-underline" href="mailto:diorkamol@icloud.com">diorkamol@icloud.com</a>
+              <span class="text-slate-300 dark:text-slate-700">/</span>
+              <a class="link-underline" href="https://www.linkedin.com/in/diyor-kamolov-1174b2277/" target="_blank" rel="noreferrer">LinkedIn</a>
+              <span class="text-slate-300 dark:text-slate-700">/</span>
+              <!-- TODO: replace with your GitHub -->
+              <a class="link-underline" href="https://github.com/" target="_blank" rel="noreferrer">GitHub</a>
+            </div>
+          </div>
+
+          <dl class="mt-10 grid grid-cols-2 gap-4 sm:grid-cols-4">
+            <div class="glass rounded-2xl p-4 shadow-soft">
+              <dt class="text-xs text-slate-500 dark:text-slate-400">Focus</dt>
+              <dd class="mt-1 text-sm font-semibold">Security & governance</dd>
+            </div>
+            <div class="glass rounded-2xl p-4 shadow-soft">
+              <dt class="text-xs text-slate-500 dark:text-slate-400">Method</dt>
+              <dd class="mt-1 text-sm font-semibold">Analysis & systems</dd>
+            </div>
+            <div class="glass rounded-2xl p-4 shadow-soft">
+              <dt class="text-xs text-slate-500 dark:text-slate-400">Tools</dt>
+              <dd class="mt-1 text-sm font-semibold">Python · GIS · Web</dd>
+            </div>
+            <div class="glass rounded-2xl p-4 shadow-soft">
+              <dt class="text-xs text-slate-500 dark:text-slate-400">Location</dt>
+              <dd class="mt-1 text-sm font-semibold">London / US</dd>
+            </div>
+          </dl>
+        </div>
+
+        <!-- Portrait / card -->
+        <div class="lg:col-span-5">
+          <div class="rounded-3xl border border-slate-200 bg-white/70 p-5 shadow-soft dark:border-slate-800 dark:bg-slate-950/40">
+            <div class="flex items-start gap-4">
+              <div class="h-14 w-14 shrink-0 overflow-hidden rounded-2xl border border-slate-200 bg-slate-50 dark:border-slate-800 dark:bg-slate-900">
+                <!-- TODO: replace with your headshot -->
+                <img src="https://images.unsplash.com/photo-1520975958225-1b0d89f25547?auto=format&fit=crop&w=220&q=80"
+                     alt="Portrait placeholder"
+                     class="h-full w-full object-cover" />
+              </div>
+              <div class="min-w-0">
+                <p class="text-sm font-semibold">Currently</p>
+                <p class="mt-1 text-sm text-slate-600 dark:text-slate-300">
+                  Building a writing and project portfolio with an emphasis on policy-relevant research and clear, publishable analysis.
+                </p>
+                <div class="mt-3 flex flex-wrap gap-2 text-xs">
+                  <span class="rounded-full border border-slate-200 bg-white px-2.5 py-1 dark:border-slate-800 dark:bg-slate-950">Policy writing</span>
+                  <span class="rounded-full border border-slate-200 bg-white px-2.5 py-1 dark:border-slate-800 dark:bg-slate-950">Data analysis</span>
+                  <span class="rounded-full border border-slate-200 bg-white px-2.5 py-1 dark:border-slate-800 dark:bg-slate-950">Research memos</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="mt-6 border-t border-slate-200 pt-5 text-sm dark:border-slate-800">
+              <p class="text-slate-600 dark:text-slate-300">
+                This site is designed to be modular. Replace placeholders with your articles, projects, and photos as you publish.
+              </p>
+              <p class="mt-3 text-xs text-slate-500 dark:text-slate-400">
+                Tip: keep images and PDFs in <span class="font-mono">/assets</span>, and reference them with relative URLs.
+              </p>
+            </div>
+          </div>
         </div>
       </div>
     </div>
   </section>
 
-  <footer class="border-t border-slate-200 py-8 text-center text-sm text-slate-500 dark:border-slate-800 dark:text-slate-400">
+  <!-- Writing -->
+  <section id="writing" class="border-t border-slate-200/70 dark:border-slate-800/70">
+    <div class="mx-auto max-w-6xl px-4 sm:px-6 py-14 sm:py-18">
+      <div class="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+        <div>
+          <h2 class="text-2xl font-bold tracking-tight">Writing</h2>
+          <p class="mt-2 max-w-prose text-sm text-slate-600 dark:text-slate-300">
+            Articles, memos, and essays. Each entry should link to a dedicated page or PDF.
+          </p>
+        </div>
+
+        <div class="flex flex-wrap gap-2">
+          <button data-filter="all" class="filterBtn rounded-xl border border-slate-200 bg-white px-3 py-2 text-xs shadow-sm dark:border-slate-800 dark:bg-slate-950">All</button>
+          <button data-filter="security" class="filterBtn rounded-xl border border-slate-200 bg-white px-3 py-2 text-xs shadow-sm dark:border-slate-800 dark:bg-slate-950">Security</button>
+          <button data-filter="law" class="filterBtn rounded-xl border border-slate-200 bg-white px-3 py-2 text-xs shadow-sm dark:border-slate-800 dark:bg-slate-950">Law</button>
+          <button data-filter="tech" class="filterBtn rounded-xl border border-slate-200 bg-white px-3 py-2 text-xs shadow-sm dark:border-slate-800 dark:bg-slate-950">Tech</button>
+        </div>
+      </div>
+
+      <div class="mt-8 grid gap-5 md:grid-cols-2">
+        <!-- ARTICLE CARD (duplicate and edit) -->
+        <article data-tags="security"
+          class="group rounded-3xl border border-slate-200 bg-white/70 p-6 shadow-soft transition hover:shadow-glow dark:border-slate-800 dark:bg-slate-950/40">
+          <div class="flex items-center justify-between gap-3">
+            <span class="rounded-full border border-slate-200 bg-white px-3 py-1 text-xs text-slate-600 dark:border-slate-800 dark:bg-slate-950 dark:text-slate-300">Security</span>
+            <time class="text-xs text-slate-500 dark:text-slate-400" datetime="2026-01-01">Jan 2026</time>
+          </div>
+          <h3 class="mt-4 text-lg font-semibold leading-snug">
+            <a href="#" class="link-underline">
+              Placeholder: A policy memo title that sounds like a published piece
+            </a>
+          </h3>
+          <p class="mt-2 text-sm text-slate-600 dark:text-slate-300">
+            Two-to-three sentence abstract. State the question, method, and the core claim. Keep it concrete and readable.
+          </p>
+          <div class="mt-4 flex flex-wrap gap-2 text-xs text-slate-500 dark:text-slate-400">
+            <span class="rounded-full border border-slate-200 px-2.5 py-1 dark:border-slate-800">Deterrence</span>
+            <span class="rounded-full border border-slate-200 px-2.5 py-1 dark:border-slate-800">Escalation</span>
+            <span class="rounded-full border border-slate-200 px-2.5 py-1 dark:border-slate-800">Case study</span>
+          </div>
+        </article>
+
+        <article data-tags="law"
+          class="group rounded-3xl border border-slate-200 bg-white/70 p-6 shadow-soft transition hover:shadow-glow dark:border-slate-800 dark:bg-slate-950/40">
+          <div class="flex items-center justify-between gap-3">
+            <span class="rounded-full border border-slate-200 bg-white px-3 py-1 text-xs text-slate-600 dark:border-slate-800 dark:bg-slate-950 dark:text-slate-300">Law</span>
+            <time class="text-xs text-slate-500 dark:text-slate-400" datetime="2026-01-01">Jan 2026</time>
+          </div>
+          <h3 class="mt-4 text-lg font-semibold leading-snug">
+            <a href="#" class="link-underline">
+              Placeholder: Legal analysis essay (topic + normative claim)
+            </a>
+          </h3>
+          <p class="mt-2 text-sm text-slate-600 dark:text-slate-300">
+            Outline the doctrine/problem, your interpretive frame, and the implication. This is where you signal rigor.
+          </p>
+          <div class="mt-4 flex flex-wrap gap-2 text-xs text-slate-500 dark:text-slate-400">
+            <span class="rounded-full border border-slate-200 px-2.5 py-1 dark:border-slate-800">International law</span>
+            <span class="rounded-full border border-slate-200 px-2.5 py-1 dark:border-slate-800">Proportionality</span>
+          </div>
+        </article>
+
+        <article data-tags="tech"
+          class="group rounded-3xl border border-slate-200 bg-white/70 p-6 shadow-soft transition hover:shadow-glow dark:border-slate-800 dark:bg-slate-950/40">
+          <div class="flex items-center justify-between gap-3">
+            <span class="rounded-full border border-slate-200 bg-white px-3 py-1 text-xs text-slate-600 dark:border-slate-800 dark:bg-slate-950 dark:text-slate-300">Tech</span>
+            <time class="text-xs text-slate-500 dark:text-slate-400" datetime="2026-01-01">Jan 2026</time>
+          </div>
+          <h3 class="mt-4 text-lg font-semibold leading-snug">
+            <a href="#" class="link-underline">
+              Placeholder: A technical post with policy relevance (data, AI, governance)
+            </a>
+          </h3>
+          <p class="mt-2 text-sm text-slate-600 dark:text-slate-300">
+            Explain the system in plain terms, show what the evidence suggests, then translate it into governance stakes.
+          </p>
+          <div class="mt-4 flex flex-wrap gap-2 text-xs text-slate-500 dark:text-slate-400">
+            <span class="rounded-full border border-slate-200 px-2.5 py-1 dark:border-slate-800">Python</span>
+            <span class="rounded-full border border-slate-200 px-2.5 py-1 dark:border-slate-800">Methods</span>
+            <span class="rounded-full border border-slate-200 px-2.5 py-1 dark:border-slate-800">Ethics</span>
+          </div>
+        </article>
+
+        <article data-tags="security law"
+          class="group rounded-3xl border border-slate-200 bg-white/70 p-6 shadow-soft transition hover:shadow-glow dark:border-slate-800 dark:bg-slate-950/40">
+          <div class="flex items-center justify-between gap-3">
+            <span class="rounded-full border border-slate-200 bg-white px-3 py-1 text-xs text-slate-600 dark:border-slate-800 dark:bg-slate-950 dark:text-slate-300">Security · Law</span>
+            <time class="text-xs text-slate-500 dark:text-slate-400" datetime="2026-01-01">Jan 2026</time>
+          </div>
+          <h3 class="mt-4 text-lg font-semibold leading-snug">
+            <a href="#" class="link-underline">
+              Placeholder: Short commentary (timely, precise, evidence-first)
+            </a>
+          </h3>
+          <p class="mt-2 text-sm text-slate-600 dark:text-slate-300">
+            If you publish shorter pieces, keep the structure disciplined: claim → evidence → implication → limits.
+          </p>
+          <div class="mt-4 flex flex-wrap gap-2 text-xs text-slate-500 dark:text-slate-400">
+            <span class="rounded-full border border-slate-200 px-2.5 py-1 dark:border-slate-800">Sanctions</span>
+            <span class="rounded-full border border-slate-200 px-2.5 py-1 dark:border-slate-800">Institutions</span>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- Work / Projects -->
+  <section id="projects" class="border-t border-slate-200/70 dark:border-slate-800/70">
+    <div class="mx-auto max-w-6xl px-4 sm:px-6 py-14 sm:py-18">
+      <h2 class="text-2xl font-bold tracking-tight">Work and projects</h2>
+      <p class="mt-2 max-w-prose text-sm text-slate-600 dark:text-slate-300">
+        A curated set of work products: research briefs, data projects, and web builds. Prefer fewer, stronger entries.
+      </p>
+
+      <div class="mt-8 grid gap-5 lg:grid-cols-3">
+        <div class="rounded-3xl border border-slate-200 bg-white/70 p-6 shadow-soft dark:border-slate-800 dark:bg-slate-950/40">
+          <p class="text-xs text-slate-500 dark:text-slate-400">Policy / Research</p>
+          <h3 class="mt-2 text-base font-semibold">Issue brief: [topic]</h3>
+          <p class="mt-2 text-sm text-slate-600 dark:text-slate-300">
+            One paragraph describing the question, your argument, and the takeaway. Link to PDF or page.
+          </p>
+          <div class="mt-4 flex gap-3 text-sm">
+            <a class="link-underline" href="#">Read</a>
+            <a class="link-underline" href="#">PDF</a>
+          </div>
+        </div>
+
+        <div class="rounded-3xl border border-slate-200 bg-white/70 p-6 shadow-soft dark:border-slate-800 dark:bg-slate-950/40">
+          <p class="text-xs text-slate-500 dark:text-slate-400">Data / Methods</p>
+          <h3 class="mt-2 text-base font-semibold">Transport connectivity analysis</h3>
+          <p class="mt-2 text-sm text-slate-600 dark:text-slate-300">
+            Summarize the dataset, metric, and what the map/regression indicates. Add a figure preview if available.
+          </p>
+          <div class="mt-4 flex gap-3 text-sm">
+            <a class="link-underline" href="#">Repository</a>
+            <a class="link-underline" href="#">Write-up</a>
+          </div>
+        </div>
+
+        <div class="rounded-3xl border border-slate-200 bg-white/70 p-6 shadow-soft dark:border-slate-800 dark:bg-slate-950/40">
+          <p class="text-xs text-slate-500 dark:text-slate-400">Web / Design</p>
+          <h3 class="mt-2 text-base font-semibold">Personal site build</h3>
+          <p class="mt-2 text-sm text-slate-600 dark:text-slate-300">
+            Treat design as part of credibility: typography, hierarchy, and load performance. Keep it clean.
+          </p>
+          <div class="mt-4 flex gap-3 text-sm">
+            <a class="link-underline" href="#">Case notes</a>
+            <a class="link-underline" href="#">Source</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Timeline -->
+      <div class="mt-10 rounded-3xl border border-slate-200 bg-white/70 p-6 shadow-soft dark:border-slate-800 dark:bg-slate-950/40">
+        <h3 class="text-base font-semibold">Selected timeline</h3>
+        <ol class="mt-4 space-y-4">
+          <li class="flex gap-4">
+            <div class="mt-1 h-2 w-2 rounded-full bg-slate-900 dark:bg-slate-100"></div>
+            <div>
+              <p class="text-sm font-medium">London School of Economics (Academic year abroad)</p>
+              <p class="text-sm text-slate-600 dark:text-slate-300">Coursework and research development across security, governance, and applied methods.</p>
+            </div>
+          </li>
+          <li class="flex gap-4">
+            <div class="mt-1 h-2 w-2 rounded-full bg-slate-900 dark:bg-slate-100"></div>
+            <div>
+              <p class="text-sm font-medium">Bates College (Politics · Philosophy · CS)</p>
+              <p class="text-sm text-slate-600 dark:text-slate-300">Interdisciplinary training with an emphasis on analysis, argumentation, and building systems.</p>
+            </div>
+          </li>
+          <!-- Add items as needed -->
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <!-- Interests -->
+  <section id="interests" class="border-t border-slate-200/70 dark:border-slate-800/70">
+    <div class="mx-auto max-w-6xl px-4 sm:px-6 py-14 sm:py-18">
+      <h2 class="text-2xl font-bold tracking-tight">Interests</h2>
+      <p class="mt-2 max-w-prose text-sm text-slate-600 dark:text-slate-300">
+        What I read, track, and think about. Keep these as living categories; update quarterly.
+      </p>
+
+      <div class="mt-8 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+        <div class="rounded-3xl border border-slate-200 bg-white/70 p-6 shadow-soft dark:border-slate-800 dark:bg-slate-950/40">
+          <h3 class="text-base font-semibold">International security</h3>
+          <ul class="mt-3 space-y-2 text-sm text-slate-600 dark:text-slate-300">
+            <li>Deterrence and escalation dynamics</li>
+            <li>Alliance politics and extended deterrence</li>
+            <li>Institutions, norms, and compliance</li>
+          </ul>
+        </div>
+
+        <div class="rounded-3xl border border-slate-200 bg-white/70 p-6 shadow-soft dark:border-slate-800 dark:bg-slate-950/40">
+          <h3 class="text-base font-semibold">Law and governance</h3>
+          <ul class="mt-3 space-y-2 text-sm text-slate-600 dark:text-slate-300">
+            <li>Use of force, IHL, and accountability</li>
+            <li>Administrative capacity and state legitimacy</li>
+            <li>Rule-of-law constraints on security policy</li>
+          </ul>
+        </div>
+
+        <div class="rounded-3xl border border-slate-200 bg-white/70 p-6 shadow-soft dark:border-slate-800 dark:bg-slate-950/40">
+          <h3 class="text-base font-semibold">Technology and methods</h3>
+          <ul class="mt-3 space-y-2 text-sm text-slate-600 dark:text-slate-300">
+            <li>Applied data science for policy questions</li>
+            <li>AI systems, bias, and governance</li>
+            <li>Mapping, spatial analysis, causal inference</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Photos -->
+  <section id="photos" class="border-t border-slate-200/70 dark:border-slate-800/70">
+    <div class="mx-auto max-w-6xl px-4 sm:px-6 py-14 sm:py-18">
+      <div class="flex items-end justify-between gap-6">
+        <div>
+          <h2 class="text-2xl font-bold tracking-tight">Photos</h2>
+          <p class="mt-2 max-w-prose text-sm text-slate-600 dark:text-slate-300">
+            A small, intentional gallery. Use 6–12 images; keep file sizes optimized.
+          </p>
+        </div>
+        <p class="hidden sm:block text-xs text-slate-500 dark:text-slate-400">
+          Click an image to view.
+        </p>
+      </div>
+
+      <div class="mt-8 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
+        <!-- Replace src with your /assets images -->
+        <button class="photoBtn group relative overflow-hidden rounded-3xl border border-slate-200 bg-slate-50 shadow-soft dark:border-slate-800 dark:bg-slate-900"
+                data-src="https://images.unsplash.com/photo-1520975745557-541f2f40b8c9?auto=format&fit=crop&w=1600&q=80"
+                data-alt="Photo placeholder 1">
+          <img class="h-40 w-full object-cover transition group-hover:scale-[1.03]" alt="Photo placeholder 1"
+               src="https://images.unsplash.com/photo-1520975745557-541f2f40b8c9?auto=format&fit=crop&w=800&q=70">
+        </button>
+
+        <button class="photoBtn group relative overflow-hidden rounded-3xl border border-slate-200 bg-slate-50 shadow-soft dark:border-slate-800 dark:bg-slate-900"
+                data-src="https://images.unsplash.com/photo-1520975867597-0f27c6db2ab3?auto=format&fit=crop&w=1600&q=80"
+                data-alt="Photo placeholder 2">
+          <img class="h-40 w-full object-cover transition group-hover:scale-[1.03]" alt="Photo placeholder 2"
+               src="https://images.unsplash.com/photo-1520975867597-0f27c6db2ab3?auto=format&fit=crop&w=800&q=70">
+        </button>
+
+        <button class="photoBtn group relative overflow-hidden rounded-3xl border border-slate-200 bg-slate-50 shadow-soft dark:border-slate-800 dark:bg-slate-900"
+                data-src="https://images.unsplash.com/photo-1520975607366-5f6db8b3f9b6?auto=format&fit=crop&w=1600&q=80"
+                data-alt="Photo placeholder 3">
+          <img class="h-40 w-full object-cover transition group-hover:scale-[1.03]" alt="Photo placeholder 3"
+               src="https://images.unsplash.com/photo-1520975607366-5f6db8b3f9b6?auto=format&fit=crop&w=800&q=70">
+        </button>
+
+        <button class="photoBtn group relative overflow-hidden rounded-3xl border border-slate-200 bg-slate-50 shadow-soft dark:border-slate-800 dark:bg-slate-900"
+                data-src="https://images.unsplash.com/photo-1520975969634-8d13c0f2c2c9?auto=format&fit=crop&w=1600&q=80"
+                data-alt="Photo placeholder 4">
+          <img class="h-40 w-full object-cover transition group-hover:scale-[1.03]" alt="Photo placeholder 4"
+               src="https://images.unsplash.com/photo-1520975969634-8d13c0f2c2c9?auto=format&fit=crop&w=800&q=70">
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact -->
+  <section id="contact" class="border-t border-slate-200/70 dark:border-slate-800/70">
+    <div class="mx-auto max-w-6xl px-4 sm:px-6 py-14 sm:py-18">
+      <div class="grid gap-8 lg:grid-cols-12 lg:items-start">
+        <div class="lg:col-span-7">
+          <h2 class="text-2xl font-bold tracking-tight">Contact</h2>
+          <p class="mt-2 max-w-prose text-sm text-slate-600 dark:text-slate-300">
+            The fastest route is email. If you want, add a short “office hours” line and a Calendly link.
+          </p>
+
+          <div class="mt-6 flex flex-wrap gap-3">
+            <a href="mailto:diorkamol@icloud.com"
+               class="inline-flex items-center justify-center rounded-xl bg-slate-900 px-5 py-3 text-sm font-medium text-white shadow-soft hover:shadow-glow transition dark:bg-slate-100 dark:text-slate-900">
+              Email me
+            </a>
+            <a href="https://www.linkedin.com/in/diyor-kamolov-1174b2277/" target="_blank" rel="noreferrer"
+               class="inline-flex items-center justify-center rounded-xl border border-slate-200 bg-white px-5 py-3 text-sm font-medium text-slate-800 shadow-soft hover:shadow-glow transition dark:border-slate-800 dark:bg-slate-950 dark:text-slate-100">
+              LinkedIn
+            </a>
+          </div>
+
+          <p class="mt-6 text-xs text-slate-500 dark:text-slate-400">
+            Optional: add a short line on what kinds of inquiries you welcome (research collaboration, speaking, internships, etc.).
+          </p>
+        </div>
+
+        <div class="lg:col-span-5">
+          <div class="rounded-3xl border border-slate-200 bg-white/70 p-6 shadow-soft dark:border-slate-800 dark:bg-slate-950/40">
+            <p class="text-sm font-semibold">Site notes</p>
+            <ul class="mt-3 space-y-2 text-sm text-slate-600 dark:text-slate-300">
+              <li>Replace placeholders with real links (articles, PDFs, repositories).</li>
+              <li>Host images in <span class="font-mono text-[13px]">/assets</span>; use compressed WebP where possible.</li>
+              <li>For articles, create separate HTML pages under <span class="font-mono text-[13px]">/writing/</span>.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="border-t border-slate-200/70 py-10 text-sm text-slate-500 dark:border-slate-800/70 dark:text-slate-400">
     <div class="mx-auto max-w-6xl px-4 sm:px-6">
-      <p>&copy; <span id="year"></span> Diyor Kamolov. All rights reserved.</p>
-      <p class="mt-1"><a class="link-underline" href="#home">Back to top</a></p>
+      <div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+        <p>© <span id="year"></span> Diyor Kamolov. All rights reserved.</p>
+        <div class="flex flex-wrap gap-4">
+          <a class="link-underline" href="#home">Top</a>
+          <a class="link-underline" href="#writing">Writing</a>
+          <a class="link-underline" href="#contact">Contact</a>
+        </div>
+      </div>
     </div>
   </footer>
 
+  <!-- Quick Menu (⌘K) -->
+  <div id="cmdk" class="fixed inset-0 z-[60] hidden">
+    <div class="absolute inset-0 bg-slate-950/40 backdrop-blur-sm"></div>
+    <div class="relative mx-auto mt-24 w-[92%] max-w-lg rounded-3xl border border-slate-200 bg-white p-3 shadow-glow dark:border-slate-800 dark:bg-slate-950">
+      <div class="flex items-center gap-2 px-3 py-2">
+        <span class="text-xs text-slate-500 dark:text-slate-400">Quick menu</span>
+        <span class="ml-auto text-[11px] font-mono text-slate-400 dark:text-slate-500">Esc to close</span>
+      </div>
+      <div class="mt-1 grid">
+        <a href="#writing" class="cmdkItem rounded-2xl px-3 py-3 text-sm hover:bg-slate-50 dark:hover:bg-slate-900">Writing</a>
+        <a href="#projects" class="cmdkItem rounded-2xl px-3 py-3 text-sm hover:bg-slate-50 dark:hover:bg-slate-900">Work</a>
+        <a href="#interests" class="cmdkItem rounded-2xl px-3 py-3 text-sm hover:bg-slate-50 dark:hover:bg-slate-900">Interests</a>
+        <a href="#photos" class="cmdkItem rounded-2xl px-3 py-3 text-sm hover:bg-slate-50 dark:hover:bg-slate-900">Photos</a>
+        <a href="#contact" class="cmdkItem rounded-2xl px-3 py-3 text-sm hover:bg-slate-50 dark:hover:bg-slate-900">Contact</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Photo modal -->
+  <div id="photoModal" class="fixed inset-0 z-[70] hidden">
+    <div class="absolute inset-0 bg-slate-950/60 backdrop-blur-sm"></div>
+    <div class="relative mx-auto mt-10 w-[92%] max-w-4xl">
+      <div class="flex items-center justify-between px-1 pb-3">
+        <p id="photoCaption" class="text-sm text-white/90"></p>
+        <button id="photoClose" class="rounded-xl bg-white/10 px-3 py-2 text-xs text-white hover:bg-white/15" type="button">Close</button>
+      </div>
+      <div class="overflow-hidden rounded-3xl border border-white/10 bg-black shadow-glow">
+        <img id="photoFull" alt="" class="h-[70vh] w-full object-contain bg-black" />
+      </div>
+    </div>
+  </div>
+
   <script>
+    // Year
     document.getElementById('year').textContent = new Date().getFullYear();
-    const themeBtn = document.getElementById('themeToggle');
+
+    // Theme
     const root = document.documentElement;
+    const themeBtn = document.getElementById('themeToggle');
     const stored = localStorage.getItem('theme');
     if (stored === 'dark' || (!stored && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
       root.classList.add('dark');
@@ -93,21 +603,77 @@
       root.classList.toggle('dark');
       localStorage.setItem('theme', root.classList.contains('dark') ? 'dark' : 'light');
     });
-      // Compute banner travel so it bounces within the banner width only
-    function setBannerTravel(){
-      const box = document.getElementById('devBanner');
-      const txt = document.getElementById('devBannerText');
-      if(!box || !txt) return;
-      // reset transform to measure natural width
-      txt.style.transform = 'none';
-      const travel = Math.max(0, box.clientWidth - txt.clientWidth);
-      // Start from the right edge: positive travel to 0
-      txt.style.setProperty('--travel', travel + 'px');
+
+    // Mobile menu
+    const mobileBtn = document.getElementById('mobileMenuBtn');
+    const mobileMenu = document.getElementById('mobileMenu');
+    mobileBtn?.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
+
+    // Writing filters
+    const filterButtons = Array.from(document.querySelectorAll('.filterBtn'));
+    const articles = Array.from(document.querySelectorAll('#writing article[data-tags]'));
+    function setActiveFilter(tag) {
+      filterButtons.forEach(b => b.classList.remove('ring-2','ring-sky-300','dark:ring-sky-600'));
+      const active = filterButtons.find(b => b.dataset.filter === tag);
+      active?.classList.add('ring-2','ring-sky-300','dark:ring-sky-600');
+
+      articles.forEach(a => {
+        const tags = (a.dataset.tags || '').split(/\s+/);
+        const show = tag === 'all' || tags.includes(tag);
+        a.classList.toggle('hidden', !show);
+      });
     }
-    const ro = new ResizeObserver(setBannerTravel);
-    ro.observe(document.getElementById('devBanner'));
-    window.addEventListener('load', setBannerTravel);
-    window.addEventListener('resize', setBannerTravel);
+    filterButtons.forEach(btn => btn.addEventListener('click', () => setActiveFilter(btn.dataset.filter)));
+    setActiveFilter('all');
+
+    // ⌘K quick menu
+    const cmdk = document.getElementById('cmdk');
+    const cmdkBtn = document.getElementById('cmdkBtn');
+    function openCmdk() { cmdk.classList.remove('hidden'); }
+    function closeCmdk() { cmdk.classList.add('hidden'); }
+    cmdkBtn?.addEventListener('click', openCmdk);
+
+    document.addEventListener('keydown', (e) => {
+      const isMac = navigator.platform.toUpperCase().includes('MAC');
+      if ((isMac && e.metaKey && e.key.toLowerCase() === 'k') || (!isMac && e.ctrlKey && e.key.toLowerCase() === 'k')) {
+        e.preventDefault();
+        cmdk.classList.toggle('hidden');
+      }
+      if (e.key === 'Escape') {
+        closeCmdk();
+        closePhoto();
+      }
+    });
+    cmdk?.addEventListener('click', (e) => {
+      if (e.target === cmdk) closeCmdk();
+    });
+    document.querySelectorAll('.cmdkItem').forEach(a => a.addEventListener('click', closeCmdk));
+
+    // Photo modal
+    const modal = document.getElementById('photoModal');
+    const full = document.getElementById('photoFull');
+    const cap = document.getElementById('photoCaption');
+    const closeBtn = document.getElementById('photoClose');
+
+    function openPhoto(src, alt) {
+      full.src = src;
+      full.alt = alt || '';
+      cap.textContent = alt || '';
+      modal.classList.remove('hidden');
+    }
+    function closePhoto() {
+      modal.classList.add('hidden');
+      full.src = '';
+      full.alt = '';
+      cap.textContent = '';
+    }
+    window.closePhoto = closePhoto;
+
+    document.querySelectorAll('.photoBtn').forEach(btn => {
+      btn.addEventListener('click', () => openPhoto(btn.dataset.src, btn.dataset.alt));
+    });
+    closeBtn?.addEventListener('click', closePhoto);
+    modal?.addEventListener('click', (e) => { if (e.target === modal) closePhoto(); });
   </script>
 </body>
 </html>
